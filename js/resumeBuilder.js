@@ -12,9 +12,9 @@ This is empty on purpose! Your code to build the resume will go here.
 //Bio Object
 var bio = {
 	"name" : "Georgios Georgiou",
-	"role" : "Front End practitioner",
+	"role" : "Front End Developer practitioner",
 	"contacts" : {
-		"mobile" : "+306987412365",
+		"mobile" : "+306987654321",
 		"email" : "info@ggeorgiou.gr",
 		"github" : "glgeorgiou",
 		"twitter" : "ggeorgiogr",
@@ -22,7 +22,7 @@ var bio = {
 	},
 	"welcomeMessage" : "Welcome to my resume",
 	"skills" : ["HTML","CSS","WordPress","Javascript"],
-	"bioPic" : "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/3/005/09b/281/16988e9.jpg"
+	"bioPic" : "http://www.ggeorgiou.gr/wp-content/uploads/2015/03/touch-icon-72X72.jpg"
 }
 
 
@@ -34,7 +34,7 @@ var education = {
 		"name" : "University of Wales, Newport",
 		"location" :"Newport",
 		"degree" : "Bachelor",
-		"majors" : "CS",
+		"majors" : ["Major A1", "Major A2", "Major A3"],
 		"dates" : 1999,
 		"url" : "www.newport.ac.uk"
 	},
@@ -42,7 +42,7 @@ var education = {
 		"name" : "Ecole MBA",
 		"location" :"France",
 		"degree" : "MBA in IT",
-		"majors" : "MBA",
+		"majors" : ["Major B1", "Major B2", "Major B3"],
 		"dates" : 2005,
 		"url" : "www.escem.fr"
 	}
@@ -110,9 +110,12 @@ var education = {
 */
 var formattedName = HTMLheaderName.replace("%data%",bio.name);
 var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
+var formattedPic = HTMLbioPic.replace("%data%",bio.pic);
+var formattedMessage = HTMLwelcomeMsg.replace("%data%",bio.welcomeMessage);
 $("#header").append(formattedName);
 $("#header").append(formattedRole);
-
+$("#header").append(formattedPic);
+$("#header").append(formattedMessage);
 
 
   /**
@@ -220,6 +223,33 @@ projects.display = function () {
 }
 
 projects.display();
+
+
+/*
+*  Display Education
+*/
+for (educate in education.schools) {
+    $("#education").append(HTMLschoolStart); //Append the education element
+
+    var formattedSchool = HTMLschoolName.replace("%data%", education.schools[educate].name);
+    $(".education-entry:last").append(formattedSchool);
+
+    var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", education.schools[educate].degree);
+    $(".education-entry:last").append(formattedSchoolDegree);
+
+    var formattedSchoolDates = HTMLschoolDates.replace("%data%", education.schools[educate].dates);
+    $(".education-entry:last").append(formattedSchoolDates);
+
+    var formattedSchoolLocation = HTMLschoolLocation.replace("%data%", education.schools[educate].url);
+    $(".education-entry:last").append(formattedSchoolLocation);
+
+    if (education.schools[educate].majors.length > 0) {
+      for (major in education.schools[educate].majors) {
+        var formattedMajor = HTMLschoolMajor.replace("%data%", education.schools[educate].majors[major]);
+        $(".education-entry:last").append(formattedMajor);
+      }
+    }
+  }
 
 
 /**
